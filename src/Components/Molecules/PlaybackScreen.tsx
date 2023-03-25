@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Grid from '@mui/material/Grid';
 import WorkPlayer from "../../Engine/WorkPlayer";
+import WorkInterface from "../../Works/WorkInterface";
 
 /**
  * Outline	: XXXするComponent
@@ -11,9 +12,10 @@ import WorkPlayer from "../../Engine/WorkPlayer";
 
 // Type Declaration of Props
 type Props = {
+  work: WorkInterface;
 }
 
-export const PlaybackScreen : React.FC<Props> = ({ }) => {
+export const PlaybackScreen : React.FC<Props> = ({ work }) => {
 
   // ___ state ___ ___ ___ ___ ___
   const [ workPlayer, setWorkPlayer ] = useState<WorkPlayer>();
@@ -37,7 +39,7 @@ export const PlaybackScreen : React.FC<Props> = ({ }) => {
   }
 
   const play = () => {
-    workPlayer?.play();
+    workPlayer?.play(work);
   };
 
   const stop = () => {
@@ -45,7 +47,7 @@ export const PlaybackScreen : React.FC<Props> = ({ }) => {
   }
 
   const reset = () => {
-    workPlayer?.reset();
+    workPlayer?.reset(work);
   }
 
   return (

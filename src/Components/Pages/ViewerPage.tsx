@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { SampleWork2 } from "../../Works/SampleWork2";
 import PlaybackScreen from "../Molecules/PlaybackScreen";
 
 type Props = {
@@ -25,7 +26,7 @@ export const ViewerPage : React.FC <Props> = ({ sampleProp }) => {
   return (
     <div>
       <h2>{ ViewerPage.name }</h2>
-      <PlaybackScreen/>
+      <PlaybackScreen work = { new SampleWork2() }/>
     </div>
   );
 };
