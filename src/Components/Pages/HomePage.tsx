@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import { Route, Link, Routes } from 'react-router-dom'
 import { ViewerPage } from './ViewerPage'
 import GenerativeWork from '../../Works/Management/GenerativeWork';
-import { WORK_LIST } from '../../Global/WorkList';
+import { WORK_LIST } from '../../Works/Management/WorkList';
 import WorkSelector from "../Organisms/HomePageChildren/WorkSelector";
 
 

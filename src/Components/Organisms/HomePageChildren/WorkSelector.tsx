@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Grid from '@mui/material/Grid';
-import { WORK_LIST } from "../../../Global/WorkList";
+import { WORK_LIST } from "../../../Works/Management/WorkList";
 import { Link } from 'react-router-dom'
 import Chip from '@mui/material/Chip';
 

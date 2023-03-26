@@ -1,1 +1,6 @@
-# GenerativeArtEditor
+# GenerativeArtWorks
+## 作品制作時のガイドライン
+- 1. `Works/Workfiles`内にクラスファイルを作成する。`SampleWork`などを参考にすること。
+  - 1. 作成したクラスファイルにIDを設定する。全作品を通してユニークなものを設定すること
+  - 2. メソッド`main`に処理をコーディングする。なお、独自メソッドを新規に追加しても問題ない。
+- 2. `Works/Management/WorkList`にステップ1で作成したクラスファイルを追加する。本対応を行うことでUI上の作品一覧に選択肢が追加される。
