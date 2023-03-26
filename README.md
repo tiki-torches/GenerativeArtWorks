@@ -1,1 +1,1 @@
-# GenerativeArtWorks
+# GenerativeArtEditor
