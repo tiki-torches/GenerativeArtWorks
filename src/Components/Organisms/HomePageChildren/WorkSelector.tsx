@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Route, Link, Routes } from 'react-router-dom'
-import Chip from '@mui/material/Chip';
+import Grid from '@mui/material/Grid';
 import { WORK_LIST } from "../../../Global/WorkList";
+import { Link } from 'react-router-dom'
+import Chip from '@mui/material/Chip';
+
 
 /**
  * Outline	: XXXするComponent
@@ -30,11 +32,12 @@ export const WorkSelector: React.FC<Props> = ({ updateParent }) => {
   }
   
   return (
-    <div>
+    <Grid container spacing = {2}>
       { WORK_LIST.map( (work) => {
-        return <Selection key = { work.workID } workID = { work.workID } updateParent = { updateParent }/>
+        const selection = <Selection workID = { work.workID } updateParent = { updateParent }/>
+        return <Grid item key = { work.workID }> { selection } </Grid>
       })}
-    </div>
+    </Grid>
   );
 };
 

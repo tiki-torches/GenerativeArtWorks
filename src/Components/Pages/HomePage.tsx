@@ -37,7 +37,7 @@ export const HomePage : React.FC <Props> = ({ sampleProp }) => {
 
     <Grid container spacing = { 2 }>
 
-      <Grid item xs = {2}>
+      <Grid item xs = { 12 }>
         <WorkSelector updateParent = { onclickSelector }/>
       </Grid>
 

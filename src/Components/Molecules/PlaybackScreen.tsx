@@ -33,6 +33,14 @@ export const PlaybackScreen : React.FC<Props> = ({ work }) => {
     console.log('test');
   }
 
+  const onClickScreen = () => {
+    if(workPlayer?.isPlaying === true){
+      workPlayer?.stop();
+    }else{
+      workPlayer?.play(work);
+    }
+  }
+
   const construct = () => {
     const canvas: HTMLCanvasElement = document.querySelector("#canvas") as HTMLCanvasElement;
     const workPlayer = new WorkPlayer(canvas);
@@ -47,21 +55,16 @@ export const PlaybackScreen : React.FC<Props> = ({ work }) => {
     workPlayer?.stop();
   }
 
-  const reset = () => {
-    workPlayer?.reset(work);
-  }
-
   return (
     <Grid container>
 
       <Grid container item>
-        <canvas id = 'canvas'/>
+        <canvas id = 'canvas' onClick = { onClickScreen }/>
       </Grid>
 
       <Grid container>
         <Grid item> <button onClick = { play }> PLAY </button> </Grid>
         <Grid item> <button onClick = { stop }> STOP </button> </Grid>
-        <Grid item> <button onClick = { reset }> RESET </button> </Grid>
       </Grid>
 
     </Grid>
