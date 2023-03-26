@@ -1,4 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Grid from '@mui/material/Grid';
+import { Route, Link, Routes } from 'react-router-dom'
+import { ViewerPage } from './ViewerPage'
+import GenerativeWork from '../../Works/Management/GenerativeWork';
+import { WORK_LIST } from '../../Global/WorkList';
+import WorkSelector from "../Organisms/HomePageChildren/WorkSelector";
+
 
 type Props = {
   sampleProp ?: any;
@@ -8,6 +15,7 @@ export const HomePage : React.FC <Props> = ({ sampleProp }) => {
 
   // ___ state ___ ___ ___ ___ ___
   const [ sampleState, setSampleState ] = useState<string>('This is SampleState');
+  const [ workIDToView, setWorkIDToView ] = useState<string>();
 
   // ___ use effect ___ ___ ___ ___ ___
   // useEffect( () => { console.log(sampleState) }, [ sampleState ] );
@@ -16,18 +24,29 @@ export const HomePage : React.FC <Props> = ({ sampleProp }) => {
   const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
   };
 
+  const onclickSelector = (workID: string) => {
+    setWorkIDToView(workID);
+  }
+
   // ___ method ___ ___ ___ ___ ___
   const test = () => {
     console.log('test');
   }
 
   return (
-    <div>
-      <h2>{ HomePage.name }</h2>
-      <h3>latest information</h3>
-      <h3>user's works list</h3>
-      <h3>premade works list</h3>
-    </div>
+
+    <Grid container spacing = { 2 }>
+
+      <Grid item xs = {2}>
+        <WorkSelector updateParent = { onclickSelector }/>
+      </Grid>
+
+      <Routes>
+        <Route path = { '/viewer?workID=' + workIDToView }   element = { <ViewerPage />} />
+      </Routes>
+
+    </Grid>
+
   );
 };
 

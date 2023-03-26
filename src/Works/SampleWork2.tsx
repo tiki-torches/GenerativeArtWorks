@@ -1,20 +1,23 @@
 import * as THREE from 'three';
-import WorkInterface from "./WorkInterface";
+import GenerativeWork from "./Management/GenerativeWork";
 
 /**
  * サンプル
  *  作品内で動的に3Dオブジェクトを生成する
  */
-export class SampleWork2 implements WorkInterface{
+export class SampleWork2 extends GenerativeWork{
 
-  meshes  : Array<THREE.Mesh>;
+  static workID : string = 'sample2';
+
+  meshes: Array<THREE.Mesh>;
 
   constructor(){
 
-    const geometry = new THREE.BoxGeometry(400, 400, 400);
-    const material = new THREE.MeshNormalMaterial();
-    const box = new THREE.Mesh(geometry, material);
-    this.meshes = [ box ];
+    super();
+
+    // 新しい3Dモデルを生成
+    const generated = this.generateMesh();
+    this.meshes = [ generated ];
     
   }
 
@@ -32,16 +35,11 @@ export class SampleWork2 implements WorkInterface{
     this.updateScene(scene, [ generated ]);
   };
 
-  updateScene(scene: THREE.Scene, targetMeshes: Array<THREE.Mesh>): void{
-    targetMeshes.forEach( (mesh) => { scene.add(mesh); });
-  }
-
   generateMesh(): THREE.Mesh{
     const geometry = new THREE.BoxGeometry(400, 400, 400);
     const material = new THREE.MeshNormalMaterial();
     const mesh = new THREE.Mesh(geometry, material);
     return mesh
   }
-
 
 }

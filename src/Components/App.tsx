@@ -23,12 +23,6 @@ const App : React.FunctionComponent = () => {
             </Link>
           </Grid>
 
-          <Grid item xs = { 6 }  sm = { 2 }>
-            <Link to = '/viewer' style = { { textDecoration: 'none' , fontWeight: 'bold' } }>
-              <span>Works</span>
-            </Link>
-          </Grid>
-
           <Grid item xs = { 6 } sm = { 2 }>
             <Link to = '/contact' style = { { textDecoration: 'none' , fontWeight: 'bold' } }>
               <span>Contact</span>

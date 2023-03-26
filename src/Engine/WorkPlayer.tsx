@@ -1,4 +1,4 @@
-import WorkInterface from 'src/Works/WorkInterface';
+import WorkInterface from 'src/Works/Management/GenerativeWork';
 import * as THREE from 'three';
 
 /**
