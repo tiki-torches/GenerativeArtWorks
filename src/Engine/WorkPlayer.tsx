@@ -28,7 +28,7 @@ class WorkPlayer{
     this.isPlaying    = false;
 
     const renderer: any = new THREE.WebGLRenderer({
-      canvas: canvas
+      canvas: canvas, antialias: true
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(this.width, this.height);
