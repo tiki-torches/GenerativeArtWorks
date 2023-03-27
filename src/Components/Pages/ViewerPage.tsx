@@ -4,7 +4,7 @@ import { NotFound } from "../../Works/Management/NotFound";
 import { NOT_FOUND } from "../../Global/Vars";
 import { WORK_LIST } from "../../Works/Management/WorkList";
 import GenerativeWork from "../../Works/Management/GenerativeWork";
-import { SampleWork1 } from "../../Works/Workfiles/SampleWork1";
+import { SampleWork1 } from "../../Works/Management/Samples/SampleWork1";
 import PlaybackScreen from "../Molecules/PlaybackScreen";
 
 
