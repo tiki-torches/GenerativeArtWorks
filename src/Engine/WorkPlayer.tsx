@@ -15,8 +15,8 @@ class WorkPlayer{
   isPlaying     : Boolean;
 
   // THREE用
-  width = 960;
-  height = 540;
+  width   = 1920;
+  height  = 1080;
   renderer  : THREE.WebGLRenderer;
   scene     : THREE.Scene;
   camera    : THREE.PerspectiveCamera;
