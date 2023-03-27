@@ -43,7 +43,7 @@ export const ViewerPage : React.FC <Props> = ({ }) => {
 
   return (
     <div>
-      <PlaybackScreen work = { generateWork(getWorkID()) }/>
+      <PlaybackScreen work = { generateWork(getWorkID()) } isValidAutoPlay = { false }/>
     </div>
   );
 };
