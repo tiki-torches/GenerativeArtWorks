@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createRef } from "react";
 import Grid from '@mui/material/Grid';
 import WorkPlayer from "../../Engine/WorkPlayer";
 import WorkInterface from "../../Works/Management/GenerativeWork";
+import Recorder from "../../Engine/Recorder";
 
 /**
  * Outline	: XXXするComponent
@@ -20,6 +21,8 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
 
   // ___ state ___ ___ ___ ___ ___
   const [ workPlayer, setWorkPlayer ] = useState<WorkPlayer>();
+  const [ canvasRef,  setCanvasRef ] = useState<HTMLCanvasElement>();
+
 
   // ___ use effect ___ ___ ___ ___ ___
   useEffect( () => { construct() }, [ ] );    // 初回レンダー時のみ実行 useEffectの依存対象に空配列を指定することで初回のみに限定できる
@@ -51,6 +54,7 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
     const canvas: HTMLCanvasElement = document.querySelector("#canvas") as HTMLCanvasElement;
     const workPlayer = new WorkPlayer(canvas);
     setWorkPlayer(workPlayer);
+    setCanvasRef(canvas);
   }
 
   const play = () => {
@@ -71,6 +75,7 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
       <Grid container>
         <Grid item> <button onClick = { play }> PLAY </button> </Grid>
         <Grid item> <button onClick = { stop }> STOP </button> </Grid>
+        <Recorder canvas = { canvasRef }/>
       </Grid>
 
     </Grid>
