@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Option } from '../../../Engine/WorkPlayer';
 import GenerativeWork from "../GenerativeWork";
 
 /**
@@ -7,6 +8,7 @@ import GenerativeWork from "../GenerativeWork";
 export class SampleWork1 extends GenerativeWork{
 
   static workID : string = 'sample1';
+  cameraType    : Option['camera'] = 'Perspective';
 
   meshes: Array<THREE.Mesh>;
 

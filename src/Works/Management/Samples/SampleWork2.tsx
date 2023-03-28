@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import GenerativeWork from "../../Management/GenerativeWork";
+import { Option } from '../../../Engine/WorkPlayer';
+import GenerativeWork from "../GenerativeWork";
 
 /**
  * サンプル
@@ -8,6 +9,7 @@ import GenerativeWork from "../../Management/GenerativeWork";
 export class SampleWork2 extends GenerativeWork{
 
   static workID : string = 'sample2';
+  cameraType    : Option['camera'] = 'Orthographic';
 
   meshes: Array<THREE.Mesh>;
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, createRef } from "react";
 import Grid from '@mui/material/Grid';
 import WorkPlayer, { Option } from "../../Engine/WorkPlayer";
-import WorkInterface from "../../Works/Management/GenerativeWork";
+import GenerativeWork from "../../Works/Management/GenerativeWork";
 import Recorder from "../../Engine/Recorder";
 
 /**
@@ -13,7 +13,7 @@ import Recorder from "../../Engine/Recorder";
 
 // Type Declaration of Props
 type Props = {
-  work: WorkInterface;
+  work: GenerativeWork;
   isValidAutoPlay?: boolean;
 }
 
@@ -22,7 +22,7 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
   // ___ state ___ ___ ___ ___ ___
   const [ workPlayer, setWorkPlayer ] = useState<WorkPlayer>();
   const [ canvasRef,  setCanvasRef ]  = useState<HTMLCanvasElement>();
-  const [ cameraType, setCameraType ] = useState<Option['camera']>('Perspective');
+  const [ cameraType, setCameraType ] = useState<Option['camera']>(work.cameraType);
 
   // ___ use effect ___ ___ ___ ___ ___
   useEffect( () => { construct() }, [ ] );    // 初回レンダー時のみ実行 useEffectの依存対象に空配列を指定することで初回のみに限定できる
@@ -52,9 +52,10 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
 
   const construct = () => {
     const canvas: HTMLCanvasElement = document.querySelector("#canvas") as HTMLCanvasElement;
-    const workPlayer = new WorkPlayer(canvas);
-    setWorkPlayer(workPlayer);
     setCanvasRef(canvas);
+    const option: Option = { camera: cameraType }
+    const workPlayer = new WorkPlayer(canvas, option);
+    setWorkPlayer(workPlayer);
   }
 
   const play = () => {

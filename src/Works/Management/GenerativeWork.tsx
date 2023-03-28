@@ -1,12 +1,16 @@
+import { Option } from '../../Engine/WorkPlayer';
 import * as THREE from 'three';
 
 export abstract class GenerativeWork{
 
-  static workID: string;
+  static workID : string;
+
+  // 作品で既定のカメラタイプ
+  cameraType    : Option['camera'] = 'Perspective';
 
   // レンダー対象の3Dオブジェクト
   // 本リストに追加することでレンダー対象に設定される
-  meshes: Array<THREE.Mesh>;
+  meshes: Array<THREE.Mesh | THREE.Line>;
 
   constructor(){
     this.meshes = [];
