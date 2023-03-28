@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Option } from '../../Engine/WorkPlayer';
 import GenerativeWork from "../Management/GenerativeWork";
 
 /**
@@ -7,6 +8,7 @@ import GenerativeWork from "../Management/GenerativeWork";
 export class JustLowerRightRotateFaster extends GenerativeWork{
 
   static workID : string = 'JustLowerRightRotateFaster';
+  cameraType    : Option['camera'] = 'Orthographic';
 
   meshes: Array<THREE.Mesh>;
   meshMatrix: Array<Array<THREE.Mesh>>;
