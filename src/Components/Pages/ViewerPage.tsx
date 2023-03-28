@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Link, Routes, useSearchParams } from 'react-router-dom'
 import { NotFound } from "../../Works/Management/NotFound";
 import { NOT_FOUND } from "../../Global/Vars";
-import { WORK_LIST } from "../../Global/WorkList";
+import { WORK_LIST } from "../../Works/Management/WorkList";
 import GenerativeWork from "../../Works/Management/GenerativeWork";
-import { SampleWork1 } from "../../Works/SampleWork1";
+import { SampleWork1 } from "../../Works/Management/Samples/SampleWork1";
 import PlaybackScreen from "../Molecules/PlaybackScreen";
 
 
@@ -43,7 +43,7 @@ export const ViewerPage : React.FC <Props> = ({ }) => {
 
   return (
     <div>
-      <PlaybackScreen work = { generateWork(getWorkID()) }/>
+      <PlaybackScreen work = { generateWork(getWorkID()) } isValidAutoPlay = { false }/>
     </div>
   );
 };

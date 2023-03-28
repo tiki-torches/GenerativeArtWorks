@@ -15,11 +15,11 @@ class WorkPlayer{
   isPlaying     : Boolean;
 
   // THREE用
-  width = 960;
-  height = 540;
+  width   = 1920;
+  height  = 1080;
   renderer  : THREE.WebGLRenderer;
   scene     : THREE.Scene;
-  camera    : THREE.PerspectiveCamera;
+  camera    : THREE.PerspectiveCamera | THREE.OrthographicCamera;
 
   constructor(canvas: HTMLCanvasElement){
 
@@ -28,13 +28,15 @@ class WorkPlayer{
     this.isPlaying    = false;
 
     const renderer: any = new THREE.WebGLRenderer({
-      canvas: canvas
+      canvas: canvas, antialias: true
     });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(this.width, this.height);
     this.renderer = renderer;
 
-    const camera = new THREE.PerspectiveCamera(45, this.width / this.height);
+    // const camera = new THREE.PerspectiveCamera(45, this.width / this.height);
+    // new THREE.OrthographicCamera(left, right, top, bottom, near, far)
+    const camera = new THREE.OrthographicCamera(-960, +960, 540, -540, 1, 1000);
     camera.position.set(0, 0, +1000);
     this.camera = camera;
 

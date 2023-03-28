@@ -13,25 +13,21 @@ import WorkInterface from "../../Works/Management/GenerativeWork";
 // Type Declaration of Props
 type Props = {
   work: WorkInterface;
+  isValidAutoPlay?: boolean;
 }
 
-export const PlaybackScreen : React.FC<Props> = ({ work }) => {
+export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
 
   // ___ state ___ ___ ___ ___ ___
   const [ workPlayer, setWorkPlayer ] = useState<WorkPlayer>();
 
   // ___ use effect ___ ___ ___ ___ ___
   useEffect( () => { construct() }, [ ] );    // 初回レンダー時のみ実行 useEffectの依存対象に空配列を指定することで初回のみに限定できる
-  useEffect( () => { play() }, [ workPlayer ] );    // プレイヤーの準備完了時に再生を自動で開始
+  useEffect( () => { onReadyPlayer() }, [ workPlayer ] );    // プレイヤーの準備完了時に再生を自動で開始
 
   // ___ event handler ___ ___ ___ ___ ___
   const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
   };
-
-  // ___ method ___ ___ ___ ___ ___
-  const test = () => {
-    console.log('test');
-  }
 
   const onClickScreen = () => {
     if(workPlayer?.isPlaying === true){
@@ -40,6 +36,16 @@ export const PlaybackScreen : React.FC<Props> = ({ work }) => {
       workPlayer?.play(work);
     }
   }
+
+  const onReadyPlayer = () => {
+    if(isValidAutoPlay){ play() }
+  }
+
+  // ___ method ___ ___ ___ ___ ___
+  const test = () => {
+    console.log('test');
+  }
+
 
   const construct = () => {
     const canvas: HTMLCanvasElement = document.querySelector("#canvas") as HTMLCanvasElement;

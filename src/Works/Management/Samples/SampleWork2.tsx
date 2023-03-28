@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import GenerativeWork from "./Management/GenerativeWork";
+import GenerativeWork from "../../Management/GenerativeWork";
 
 /**
  * サンプル

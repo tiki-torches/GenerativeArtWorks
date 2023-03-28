@@ -4,7 +4,9 @@ export abstract class GenerativeWork{
 
   static workID: string;
 
-  meshes: Array<THREE.Mesh>;  // レンダー対象の3Dオブジェクト
+  // レンダー対象の3Dオブジェクト
+  // 本リストに追加することでレンダー対象に設定される
+  meshes: Array<THREE.Mesh>;
 
   constructor(){
     this.meshes = [];
