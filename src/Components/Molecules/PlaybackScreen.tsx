@@ -1,6 +1,6 @@
 import React, { useEffect, useState, createRef } from "react";
 import Grid from '@mui/material/Grid';
-import WorkPlayer from "../../Engine/WorkPlayer";
+import WorkPlayer, { Option } from "../../Engine/WorkPlayer";
 import WorkInterface from "../../Works/Management/GenerativeWork";
 import Recorder from "../../Engine/Recorder";
 
@@ -21,8 +21,8 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
 
   // ___ state ___ ___ ___ ___ ___
   const [ workPlayer, setWorkPlayer ] = useState<WorkPlayer>();
-  const [ canvasRef,  setCanvasRef ] = useState<HTMLCanvasElement>();
-
+  const [ canvasRef,  setCanvasRef ]  = useState<HTMLCanvasElement>();
+  const [ cameraType, setCameraType ] = useState<Option['camera']>('Perspective');
 
   // ___ use effect ___ ___ ___ ___ ___
   useEffect( () => { construct() }, [ ] );    // 初回レンダー時のみ実行 useEffectの依存対象に空配列を指定することで初回のみに限定できる
@@ -65,6 +65,12 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
     workPlayer?.stop();
   }
 
+  const switchCamera = () => {
+    const request: Option['camera'] = (cameraType === 'Perspective')? 'Orthographic': 'Perspective';
+    workPlayer?.changeCamera(request);
+    setCameraType(request);
+  }
+
   return (
     <Grid container>
 
@@ -76,6 +82,11 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
         <Grid item> <button onClick = { play }> PLAY </button> </Grid>
         <Grid item> <button onClick = { stop }> STOP </button> </Grid>
         <Recorder canvas = { canvasRef }/>
+      </Grid>
+
+      <Grid container>
+        <Grid item> <button onClick = { switchCamera }> SWITCH CAMERA TYPE </button> </Grid>
+        <Grid item> { cameraType } </Grid>
       </Grid>
 
     </Grid>
