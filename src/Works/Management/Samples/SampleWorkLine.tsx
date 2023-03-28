@@ -11,36 +11,37 @@ export class SampleWorkLine extends GenerativeWork{
   static workID     : string = 'SampleWorkLine';
   static cameraType : Option['camera'] = 'Perspective';
 
-  meshes: Array<THREE.Line>;
+  tdobjs: Array<THREE.Line>;
 
   constructor(){
 
     super();
 
     // 新しい3Dモデルを生成
-    const generated = this.generateMesh();
-    this.meshes = [ generated ];
+    const generated = this.generateLine();
+    this.tdobjs = [ generated ];
     
   }
 
   main(scene?: THREE.Scene){
 
     // アニメーション
-    this.meshes.forEach( (mesh) => {
-      mesh.rotation.y += 0.01;
+    this.tdobjs.forEach( (line) => {
+      line.rotation.y += 0.01;
+      line.geometry.attributes.position.needsUpdate = true;
     })
 
   };
 
-  generateMesh(): THREE.Line{
+  generateLine(): THREE.Line{
     const points = [];
     points.push(new THREE.Vector3(-100, 0, 0));
     points.push(new THREE.Vector3(0, 100, 0));
     points.push(new THREE.Vector3(100, 0, 0));
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
     const material = new THREE.LineBasicMaterial({color: 0xffffff});;
-    const mesh = new THREE.Line(geometry, material);
-    return mesh
+    const line = new THREE.Line(geometry, material);
+    return line
   }
 
 }

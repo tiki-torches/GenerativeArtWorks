@@ -9,7 +9,7 @@ export class NotFound extends GenerativeWork{
 
   static workID : string = NOT_FOUND;
 
-  meshes: Array<THREE.Mesh>;
+  tdobjs: Array<THREE.Mesh>;
 
   constructor(){
 
@@ -18,12 +18,12 @@ export class NotFound extends GenerativeWork{
     const geometry = new THREE.BoxGeometry(40, 40, 40);
     const material = new THREE.MeshNormalMaterial();
     const mesh = new THREE.Mesh(geometry, material);
-    this.meshes = [ mesh ];
+    this.tdobjs = [ mesh ];
     
   }
 
   main(){
-    this.meshes.forEach( (mesh) => {  mesh.rotation.y += 0.01; })
+    this.tdobjs.forEach( (mesh) => {  mesh.rotation.y += 0.01; })
   };
 
 }

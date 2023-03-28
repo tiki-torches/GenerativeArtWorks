@@ -9,7 +9,7 @@ import { JustLowerRightRotateFaster } from '../Workfiles/JustLowerRightRotateFas
 export const WORK_LIST: Array<any> = [
   SampleWork1,
   SampleWork2,
-  JustLowerRightRotateFaster,
   SampleWorkLine,
+  JustLowerRightRotateFaster,
   NotFound
 ]

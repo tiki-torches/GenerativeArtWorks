@@ -10,10 +10,10 @@ export abstract class GenerativeWork{
 
   // レンダー対象の3Dオブジェクト
   // 本リストに追加することでレンダー対象に設定される
-  meshes: Array<THREE.Mesh | THREE.Line>;
+  tdobjs: Array<THREE.Mesh | THREE.Line>;
 
   constructor(){
-    this.meshes = [];
+    this.tdobjs = [];
   }
 
 

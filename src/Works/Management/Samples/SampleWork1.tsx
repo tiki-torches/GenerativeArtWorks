@@ -10,7 +10,7 @@ export class SampleWork1 extends GenerativeWork{
   static workID : string = 'sample1';
   cameraType    : Option['camera'] = 'Perspective';
 
-  meshes: Array<THREE.Mesh>;
+  tdobjs: Array<THREE.Mesh>;
 
   constructor(){
 
@@ -19,12 +19,12 @@ export class SampleWork1 extends GenerativeWork{
     const geometry = new THREE.BoxGeometry(400, 400, 400);
     const material = new THREE.MeshNormalMaterial();
     const mesh = new THREE.Mesh(geometry, material);
-    this.meshes = [ mesh ];
+    this.tdobjs = [ mesh ];
     
   }
 
   main(){
-    this.meshes.forEach( (mesh) => {  mesh.rotation.y += 0.01; })
+    this.tdobjs.forEach( (mesh) => {  mesh.rotation.y += 0.01; })
   };
 
 }

@@ -11,7 +11,7 @@ export class SampleWork2 extends GenerativeWork{
   static workID : string = 'sample2';
   cameraType    : Option['camera'] = 'Orthographic';
 
-  meshes: Array<THREE.Mesh>;
+  tdobjs: Array<THREE.Mesh>;
 
   constructor(){
 
@@ -19,21 +19,21 @@ export class SampleWork2 extends GenerativeWork{
 
     // 新しい3Dモデルを生成
     const generated = this.generateMesh();
-    this.meshes = [ generated ];
+    this.tdobjs = [ generated ];
     
   }
 
   main(scene: THREE.Scene){
 
     // アニメーション
-    this.meshes.forEach( (mesh) => {
+    this.tdobjs.forEach( (mesh) => {
       mesh.rotation.y += 0.01;
       mesh.position.x += 1;
     })
 
     // 新しい3Dモデルを生成
     const generated = this.generateMesh();
-    this.meshes.push(generated);
+    this.tdobjs.push(generated);
     this.updateScene(scene, [ generated ]);
   };
 

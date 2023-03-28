@@ -54,7 +54,7 @@ class WorkPlayer{
     }else{
 
       // Sceneを初期化
-      this.initializeScene(this.scene, work.meshes);
+      this.initializeScene(this.scene, work.tdobjs);
   
       const animate = () => {
 
@@ -87,7 +87,7 @@ class WorkPlayer{
   }
 
   reset(work: WorkInterface): void{
-    this.initializeScene(this.scene, work.meshes);
+    this.initializeScene(this.scene, work.tdobjs);
     this.reqAnmID = 0;
     this.isPlaying = false;
   }
