@@ -1,11 +1,13 @@
 import * as THREE from 'three';
-import { Option } from '../../../Engine/WorkPlayer';
-import GenerativeWork from "../GenerativeWork";
+{/** @ts-ignore */}
+import noise from 'simplenoise';
+import { Option } from '../../Engine/WorkPlayer';
+import GenerativeWork from "../Management/GenerativeWork";
 
 
-export class SampleWorkLine extends GenerativeWork{
+export class PerlinNoiseLine extends GenerativeWork{
 
-  static workID     : string = 'SampleWorkLine';
+  static workID     : string = 'PerlinNoiseLine';
   static cameraType : Option['camera'] = 'Perspective';
 
   tdobjs: Array<THREE.Line>;
@@ -40,21 +42,26 @@ export class SampleWorkLine extends GenerativeWork{
   generatePoints(time: number): Array<THREE.Vector3>{
 
     const AMPLITUDE   = 100;
-    const PERIOD      = 180;
-    const LENGTH      = 720;
+    const PERIOD      = 720;
+    const LENGTH      = 1000;
     const START_POINT = { x: -500, y: 0, z: 0 };
 
     const points = [];
     for(let i = 0; i < LENGTH ; i++){
+
       const radian = (i / PERIOD) * Math.PI + time;
+      
+      const x = START_POINT.x + i;
+      const y = START_POINT.y + Math.sin(radian);
+      const z = START_POINT.z;
+
+      const perlin = noise.perlin3(x, y, z);
+
       points.push(
-        new THREE.Vector3(
-          START_POINT.x + i,
-          START_POINT.y + Math.sin(radian) * AMPLITUDE,
-          START_POINT.z
-        )
+        new THREE.Vector3(x, perlin * AMPLITUDE, z)
       );
     }
+    
     return points
   }
 
@@ -64,7 +71,7 @@ export class SampleWorkLine extends GenerativeWork{
     const material = new THREE.LineBasicMaterial({ color: 0xffffff });;
     const line = new THREE.Line(geometry, material);
     return line
-
+    
   }
 
 }
