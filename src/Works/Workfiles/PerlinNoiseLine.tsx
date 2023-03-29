@@ -24,7 +24,7 @@ export class PerlinNoiseLine extends GenerativeWork{
     
   }
 
-  main(scene?: THREE.Scene){
+  main(){
 
     // アニメーション
     this.tdobjs.forEach( (line) => {
@@ -41,29 +41,30 @@ export class PerlinNoiseLine extends GenerativeWork{
 
   generatePoints(time: number): Array<THREE.Vector3>{
 
-    const AMPLITUDE   = 100;
-    const PERIOD      = 720;
+    const AMPLITUDE   = 300;
     const LENGTH      = 1000;
+    const NOISE_SPEED = 50;
     const START_POINT = { x: -500, y: 0, z: 0 };
 
     const points = [];
     for(let i = 0; i < LENGTH ; i++){
 
-      const radian = (i / PERIOD) * Math.PI + time;
+      const px      = i     / NOISE_SPEED;
+      const py      = time  / NOISE_SPEED;
+      const perlin  = noise.perlin2(px, py);
       
-      const x = START_POINT.x + i;
-      const y = START_POINT.y + Math.sin(radian);
+      const x = START_POINT.x + i ;
+      const y = START_POINT.y + perlin * AMPLITUDE;
       const z = START_POINT.z;
 
-      const perlin = noise.perlin3(x, y, z);
-
       points.push(
-        new THREE.Vector3(x, perlin * AMPLITUDE, z)
+        new THREE.Vector3(x, y, z)
       );
     }
     
     return points
   }
+
 
   generateLine(points: Array<THREE.Vector3>): THREE.Line{
 

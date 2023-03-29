@@ -1,6 +1,10 @@
 import { Option } from '../../Engine/WorkPlayer';
 import * as THREE from 'three';
 
+export type OptionMethodMain = {
+  scene?: THREE.Scene,
+  animID?: number,
+}
 export abstract class GenerativeWork{
 
   static workID : string;
@@ -21,7 +25,7 @@ export abstract class GenerativeWork{
    * 作品本体の処理
    * @param scene レンダリング対象のシーン 作品内で動的に3Dオブジェクトを生成する場合は必須のオプション
    */
-  main(scene?: THREE.Scene): void{ };
+  main(option: OptionMethodMain): void{ };
 
   // シーンに指定された3Dオブジェクトを追加する
   // 基本的には利用不要 meshes にセットされたものはWorkPlayerがライフサイクルを管理する

@@ -59,7 +59,8 @@ class WorkPlayer{
       const animate = () => {
 
         // 作品を再生
-        work.main(this.scene);
+        const option = { scene: this.scene, animID: this.reqAnmID}
+        work.main(option);
   
         // レンダリングを実行
         this.renderer.render(this.scene, this.camera);

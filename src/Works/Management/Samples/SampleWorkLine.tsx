@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Option } from '../../../Engine/WorkPlayer';
-import GenerativeWork from "../GenerativeWork";
+import GenerativeWork, { OptionMethodMain } from "../GenerativeWork";
 
 
 export class SampleWorkLine extends GenerativeWork{
@@ -22,12 +22,12 @@ export class SampleWorkLine extends GenerativeWork{
     
   }
 
-  main(scene?: THREE.Scene){
+  main(option: OptionMethodMain){
 
     // アニメーション
     this.tdobjs.forEach( (line) => {
 
-      const time      = Date.now() / 1000;
+      const time      = option.animID? option.animID/100: Date.now()/1000;
       const newPoints = this.generatePoints(time);
       line.geometry.setFromPoints(newPoints)
 

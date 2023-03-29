@@ -2,7 +2,7 @@ import * as THREE from 'three';
 {/** @ts-ignore */}
 import noise from 'simplenoise';
 import { Option } from '../../../Engine/WorkPlayer';
-import GenerativeWork from "../GenerativeWork";
+import GenerativeWork, { OptionMethodMain } from "../GenerativeWork";
 
 
 export class SampleWorkPerlinNoiseLine extends GenerativeWork{
@@ -17,19 +17,19 @@ export class SampleWorkPerlinNoiseLine extends GenerativeWork{
     super();
 
     // 新しい3Dモデルを生成
-    const time      = Date.now() / 1000;
+    const time      = Date.now() / 1000;      // TODO: Dateではなく再生フレームを渡すように変更
     const points    = this.generatePoints(time);
     const generated = this.generateLine(points);
     this.tdobjs = [ generated ];
     
   }
 
-  main(scene?: THREE.Scene){
+  main(option: OptionMethodMain){
 
     // アニメーション
     this.tdobjs.forEach( (line) => {
 
-      const time      = Date.now() / 1000;
+      const time      = option.animID? option.animID/100: Date.now()/1000;
       const newPoints = this.generatePoints(time);
       line.geometry.setFromPoints(newPoints)
 

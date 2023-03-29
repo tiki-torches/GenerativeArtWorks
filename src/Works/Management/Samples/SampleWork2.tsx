@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Option } from '../../../Engine/WorkPlayer';
-import GenerativeWork from "../GenerativeWork";
+import GenerativeWork, { OptionMethodMain } from "../GenerativeWork";
 
 /**
  * サンプル
@@ -23,7 +23,7 @@ export class SampleWork2 extends GenerativeWork{
     
   }
 
-  main(scene: THREE.Scene){
+  main(option: OptionMethodMain){
 
     // アニメーション
     this.tdobjs.forEach( (mesh) => {
@@ -34,7 +34,9 @@ export class SampleWork2 extends GenerativeWork{
     // 新しい3Dモデルを生成
     const generated = this.generateMesh();
     this.tdobjs.push(generated);
-    this.updateScene(scene, [ generated ]);
+    if(option.scene){
+      this.updateScene(option.scene, [ generated ]);
+    }
   };
 
   generateMesh(): THREE.Mesh{
