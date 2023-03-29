@@ -59,9 +59,10 @@ export class JustLowerRightRotateFaster extends GenerativeWork{
   }
 
   main(){
+    const WEGHIT = 0.001;
     this.meshMatrix.forEach( (row, i) => {
       row.forEach( (mesh, j) => {
-        mesh.rotation.y +=  (i * 0.001) + (j * 0.001);
+        mesh.rotation.y +=  (i * WEGHIT) + (j * WEGHIT);
       })
     })
   };
