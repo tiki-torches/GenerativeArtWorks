@@ -3,6 +3,7 @@ import * as THREE from 'three';
 
 export type OptionMethodMain = {
   scene?: THREE.Scene,
+  camera?: THREE.PerspectiveCamera | THREE.OrthographicCamera;
   animID?: number,
 }
 export abstract class GenerativeWork{
