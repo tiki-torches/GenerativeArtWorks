@@ -2,7 +2,9 @@ import * as THREE from 'three';
 {/** @ts-ignore */}
 import noise from 'simplenoise';
 import { Option } from '../../Engine/WorkPlayer';
-import GenerativeWork from "../Management/GenerativeWork";
+import GenerativeWork, { OptionMethodMain } from "../Management/GenerativeWork";
+{/** @ts-ignore */}
+import file from './Medium/chicken.mp3'
 
 
 export class ShrillingChickenTimer extends GenerativeWork{
@@ -11,6 +13,7 @@ export class ShrillingChickenTimer extends GenerativeWork{
   static cameraType : Option['camera'] = 'Perspective';
 
   tdobjs: Array<THREE.Line>;
+  chickens: Array<THREE.Mesh>;
 
   constructor(){
 
@@ -18,17 +21,17 @@ export class ShrillingChickenTimer extends GenerativeWork{
 
     // 3Dモデルを生成
     this.tdobjs = [];
+    this.chickens = [];
 
     const dial = this.makeDial();
     this.tdobjs.push(dial);
 
     const indexes= this.makeIndexes();
     indexes.forEach( (index) => this.tdobjs.push(index) );
-
     
   }
 
-  main(){
+  main(option: OptionMethodMain){
 
     // アニメーション
     this.tdobjs.forEach( (line) => {
@@ -42,6 +45,11 @@ export class ShrillingChickenTimer extends GenerativeWork{
       line.geometry.attributes.position.needsUpdate = true;
        */
     })
+
+    if(option.animID! % 100 === 0){
+      let sound = new Audio(file);
+      sound.play();  
+    }
 
   };
 
