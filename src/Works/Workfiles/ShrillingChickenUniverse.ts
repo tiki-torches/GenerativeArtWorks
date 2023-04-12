@@ -13,9 +13,9 @@ import chicken3 from './Medium/chicken3.mp3'
 import chicken4 from './Medium/chicken4.mp3'
 
 
-export class ShrillingChickenTimer extends GenerativeWork{
+export class ShrillingChickenUniverse extends GenerativeWork{
 
-  static workID     : string = 'ShrillingChickenTimer';
+  static workID     : string = 'ShrillingChickenUniverse';
   cameraType    : Option['camera'] = 'Orthographic';
 
   tdobjs: Array<THREE.Line | THREE.Mesh>;
@@ -52,7 +52,7 @@ export class ShrillingChickenTimer extends GenerativeWork{
     this.chickens.push(c3);
 
     const mesh4 = this.createMesh();
-    const c4 = new ChickenHand(mesh4, cryCoord, chicken4, 1/8, 100);
+    const c4 = new ChickenHand(mesh4, cryCoord, chicken4, 1/16, 100);
     this.tdobjs.push(mesh4);
     this.chickens.push(c4);
 

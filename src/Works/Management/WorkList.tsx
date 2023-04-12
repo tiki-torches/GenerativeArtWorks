@@ -6,7 +6,7 @@ import { SampleWorkPerlinNoiseLine } from './Samples/SampleWorkPerlinNoiseLine'
 import { SampleWorkPerlinNoiseField } from './Samples/SampleWorkPerlinNoiseField'
 import { NotFound } from './NotFound'
 import { JustLowerRightRotateFaster } from '../Workfiles/JustLowerRightRotateFaster'
-import { ShrillingChickenTimer } from '../Workfiles/ShrillingChickenTimer'
+import { ShrillingChickenUniverse } from '../Workfiles/ShrillingChickenUniverse'
 
 export const WORK_LIST: Array<any> = [
 
@@ -17,7 +17,7 @@ export const WORK_LIST: Array<any> = [
   SampleWorkPerlinNoiseField,
 
   JustLowerRightRotateFaster,
-  ShrillingChickenTimer,
+  ShrillingChickenUniverse,
 
   NotFound
 
