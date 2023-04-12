@@ -4,16 +4,22 @@ import noise from 'simplenoise';
 import { Option } from '../../Engine/WorkPlayer';
 import GenerativeWork, { OptionMethodMain } from "../Management/GenerativeWork";
 {/** @ts-ignore */}
-import file from './Medium/chicken.mp3'
+import chicken1 from './Medium/chicken1.mp3'
+{/** @ts-ignore */}
+import chicken2 from './Medium/chicken2.mp3'
+{/** @ts-ignore */}
+import chicken3 from './Medium/chicken3.mp3'
+{/** @ts-ignore */}
+import chicken4 from './Medium/chicken4.mp3'
 
 
 export class ShrillingChickenTimer extends GenerativeWork{
 
   static workID     : string = 'ShrillingChickenTimer';
-  static cameraType : Option['camera'] = 'Perspective';
+  cameraType    : Option['camera'] = 'Orthographic';
 
-  tdobjs: Array<THREE.Line>;
-  chickens: Array<THREE.Mesh>;
+  tdobjs: Array<THREE.Line | THREE.Mesh>;
+  chickens: Array<ChickenHand>;
 
   constructor(){
 
@@ -28,6 +34,12 @@ export class ShrillingChickenTimer extends GenerativeWork{
 
     const indexes= this.makeIndexes();
     indexes.forEach( (index) => this.tdobjs.push(index) );
+
+    const mesh1 = this.createMesh();
+    const cryCoord1 = [ { x: 1, y: 0, z: 0 }, { x: -1, y: 0, z: 0 }, { x: 0, y: 1, z: 0 }, { x: 0, y: -1, z: 0 }]
+    const c1 = new ChickenHand(mesh1, cryCoord1, chicken1, 1, 400);
+    this.tdobjs.push(mesh1);
+    this.chickens.push(c1);
     
   }
 
@@ -46,10 +58,11 @@ export class ShrillingChickenTimer extends GenerativeWork{
        */
     })
 
-    if(option.animID! % 100 === 0){
-      let sound = new Audio(file);
-      sound.play();  
-    }
+    // 音声
+    this.chickens.forEach( (c) => {
+      c.cry();
+      c.move(option.animID!);
+    })
 
   };
 
@@ -73,7 +86,6 @@ export class ShrillingChickenTimer extends GenerativeWork{
   // 文字盤
   makeDial(): THREE.Line{
 
-    const START_POINT = { x: 0, y: 0, z: 0 };
     const RADIUS      = 400;
 
     const points = [];
@@ -81,9 +93,9 @@ export class ShrillingChickenTimer extends GenerativeWork{
       
       const radians = i * (Math.PI / 180)
 
-      const x = START_POINT.x + Math.cos(radians) * RADIUS;
-      const y = START_POINT.y + Math.sin(radians) * RADIUS;
-      const z = START_POINT.z;
+      const x = Math.cos(radians) * RADIUS;
+      const y = Math.sin(radians) * RADIUS;
+      const z = 0;
 
       points.push(
         new THREE.Vector3(x, y, z)
@@ -108,8 +120,48 @@ export class ShrillingChickenTimer extends GenerativeWork{
     return indexes
   }
 
-  makeChickenBox(){
+  createMesh(){
+    const geometry  = new THREE.BoxGeometry(50, 50, 50);
+    const material  = new THREE.MeshNormalMaterial();
+    const mesh      = new THREE.Mesh(geometry, material);
+    return mesh
+  }
 
+}
+
+type Coordinate = { x: number, y: number, z:number }
+
+class ChickenHand{
+
+  tdobj: THREE.Mesh
+  cryCoordinates: Array<Coordinate>;
+  cryVoice: any;
+  cryWeight: number;
+  radius: number;
+
+  constructor(tdobj: THREE.Mesh, cryCoordinates: Array<Coordinate>, cryVoice: any, cryWeight: number, radius: number){
+    this.tdobj = tdobj;
+    this.cryCoordinates = cryCoordinates;
+    this.cryVoice = cryVoice;
+    this.cryWeight = cryWeight;
+    this.radius = radius;
+  }
+
+  cry(){
+    this.cryCoordinates.forEach((coord) => {
+      if( ( Math.abs(this.tdobj.position.x - coord.x * this.radius) < 1) &&  (Math.abs(this.tdobj.position.y - coord.y * this.radius) < 1) ){
+        const sound = new Audio(this.cryVoice);
+        sound.play();
+      }
+    })
+  }
+
+  move(animID: number){
+    const radians = animID * (Math.PI / 180) * this.cryWeight;
+    const x = - (+ Math.cos(radians) * this.radius);
+    const y = Math.sin(radians) * this.radius;
+    const z = 0;
+    this.tdobj.position.set(x, y, z);
   }
 
 }
