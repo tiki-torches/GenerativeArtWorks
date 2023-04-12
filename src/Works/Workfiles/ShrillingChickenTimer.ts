@@ -36,11 +36,26 @@ export class ShrillingChickenTimer extends GenerativeWork{
     indexes.forEach( (index) => this.tdobjs.push(index) );
 
     const mesh1 = this.createMesh();
-    const cryCoord1 = [ { x: 1, y: 0, z: 0 }, { x: -1, y: 0, z: 0 }, { x: 0, y: 1, z: 0 }, { x: 0, y: -1, z: 0 }]
-    const c1 = new ChickenHand(mesh1, cryCoord1, chicken1, 1, 400);
+    const cryCoord = [ { x: 1, y: 0, z: 0 }, { x: -1, y: 0, z: 0 }, { x: 0, y: 1, z: 0 }, { x: 0, y: -1, z: 0 }]
+    const c1 = new ChickenHand(mesh1, cryCoord, chicken1, 1, 400);
     this.tdobjs.push(mesh1);
     this.chickens.push(c1);
     
+    const mesh2 = this.createMesh();
+    const c2 = new ChickenHand(mesh2, cryCoord, chicken2, 1/2, 300);
+    this.tdobjs.push(mesh2);
+    this.chickens.push(c2);
+
+    const mesh3 = this.createMesh();
+    const c3 = new ChickenHand(mesh3, cryCoord, chicken3, 1/4, 200);
+    this.tdobjs.push(mesh3);
+    this.chickens.push(c3);
+
+    const mesh4 = this.createMesh();
+    const c4 = new ChickenHand(mesh4, cryCoord, chicken4, 1/8, 100);
+    this.tdobjs.push(mesh4);
+    this.chickens.push(c4);
+
   }
 
   main(option: OptionMethodMain){
@@ -134,10 +149,10 @@ type Coordinate = { x: number, y: number, z:number }
 class ChickenHand{
 
   tdobj: THREE.Mesh
-  cryCoordinates: Array<Coordinate>;
-  cryVoice: any;
-  cryWeight: number;
-  radius: number;
+  cryCoordinates: Array<Coordinate>;    // 通過時に鳴き声をならす座標
+  cryVoice: any;                        // 鳴き声ファイルのパス
+  cryWeight: number;                    // 鳴く頻度を調整する重み
+  radius: number;                       // 軌道
 
   constructor(tdobj: THREE.Mesh, cryCoordinates: Array<Coordinate>, cryVoice: any, cryWeight: number, radius: number){
     this.tdobj = tdobj;
@@ -152,14 +167,17 @@ class ChickenHand{
       if( ( Math.abs(this.tdobj.position.x - coord.x * this.radius) < 1) &&  (Math.abs(this.tdobj.position.y - coord.y * this.radius) < 1) ){
         const sound = new Audio(this.cryVoice);
         sound.play();
+        this.tdobj.scale.x = this.tdobj.scale.x * 1.1;
+        this.tdobj.scale.y = this.tdobj.scale.y * 1.1;
+      }else{
       }
     })
   }
 
   move(animID: number){
     const radians = animID * (Math.PI / 180) * this.cryWeight;
-    const x = - (+ Math.cos(radians) * this.radius);
-    const y = Math.sin(radians) * this.radius;
+    const x = - (Math.cos(radians + 10) * this.radius);
+    const y = Math.sin(radians + 10) * this.radius;
     const z = 0;
     this.tdobj.position.set(x, y, z);
   }
