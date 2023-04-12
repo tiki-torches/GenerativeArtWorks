@@ -6,8 +6,8 @@ import GenerativeWork, { OptionMethodMain } from "../GenerativeWork";
 export class SampleWorkLine extends GenerativeWork{
 
   static workID     : string = 'SampleWorkLine';
-  static cameraType : Option['camera'] = 'Perspective';
 
+  cameraType : Option['camera'] = 'Perspective';
   tdobjs: Array<THREE.Line>;
 
   constructor(){

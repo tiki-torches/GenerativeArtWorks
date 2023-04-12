@@ -8,8 +8,8 @@ import GenerativeWork, { OptionMethodMain } from "../GenerativeWork";
 export class SampleWorkPerlinNoiseLine extends GenerativeWork{
 
   static workID     : string = 'SampleWorkPerlinNoiseLine';
-  static cameraType : Option['camera'] = 'Perspective';
-
+  
+  cameraType : Option['camera'] = 'Perspective';
   tdobjs: Array<THREE.Line>;
 
   constructor(){
