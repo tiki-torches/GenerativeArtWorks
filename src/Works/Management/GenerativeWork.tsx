@@ -1,15 +1,24 @@
+import { Option } from '../../Engine/WorkPlayer';
 import * as THREE from 'three';
 
+export type OptionMethodMain = {
+  scene?: THREE.Scene,
+  camera?: THREE.PerspectiveCamera | THREE.OrthographicCamera;
+  animID?: number,
+}
 export abstract class GenerativeWork{
 
-  static workID: string;
+  static workID : string;
+
+  // 作品で既定のカメラタイプ
+  cameraType    : Option['camera'] = 'Perspective';
 
   // レンダー対象の3Dオブジェクト
   // 本リストに追加することでレンダー対象に設定される
-  meshes: Array<THREE.Mesh>;
+  tdobjs: Array<THREE.Mesh | THREE.Line>;
 
   constructor(){
-    this.meshes = [];
+    this.tdobjs = [];
   }
 
 
@@ -17,7 +26,7 @@ export abstract class GenerativeWork{
    * 作品本体の処理
    * @param scene レンダリング対象のシーン 作品内で動的に3Dオブジェクトを生成する場合は必須のオプション
    */
-  main(scene?: THREE.Scene): void{ };
+  main(option: OptionMethodMain): void{ };
 
   // シーンに指定された3Dオブジェクトを追加する
   // 基本的には利用不要 meshes にセットされたものはWorkPlayerがライフサイクルを管理する

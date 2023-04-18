@@ -1,7 +1,7 @@
 import React, { useEffect, useState, createRef } from "react";
 import Grid from '@mui/material/Grid';
-import WorkPlayer from "../../Engine/WorkPlayer";
-import WorkInterface from "../../Works/Management/GenerativeWork";
+import WorkPlayer, { Option } from "../../Engine/WorkPlayer";
+import GenerativeWork from "../../Works/Management/GenerativeWork";
 import Recorder from "../../Engine/Recorder";
 
 /**
@@ -13,7 +13,7 @@ import Recorder from "../../Engine/Recorder";
 
 // Type Declaration of Props
 type Props = {
-  work: WorkInterface;
+  work: GenerativeWork;
   isValidAutoPlay?: boolean;
 }
 
@@ -21,8 +21,8 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
 
   // ___ state ___ ___ ___ ___ ___
   const [ workPlayer, setWorkPlayer ] = useState<WorkPlayer>();
-  const [ canvasRef,  setCanvasRef ] = useState<HTMLCanvasElement>();
-
+  const [ canvasRef,  setCanvasRef ]  = useState<HTMLCanvasElement>();
+  const [ cameraType, setCameraType ] = useState<Option['camera']>(work.cameraType);
 
   // ___ use effect ___ ___ ___ ___ ___
   useEffect( () => { construct() }, [ ] );    // 初回レンダー時のみ実行 useEffectの依存対象に空配列を指定することで初回のみに限定できる
@@ -52,9 +52,10 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
 
   const construct = () => {
     const canvas: HTMLCanvasElement = document.querySelector("#canvas") as HTMLCanvasElement;
-    const workPlayer = new WorkPlayer(canvas);
-    setWorkPlayer(workPlayer);
     setCanvasRef(canvas);
+    const option: Option = { camera: cameraType }
+    const workPlayer = new WorkPlayer(canvas, option);
+    setWorkPlayer(workPlayer);
   }
 
   const play = () => {
@@ -63,6 +64,12 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
 
   const stop = () => {
     workPlayer?.stop();
+  }
+
+  const switchCamera = () => {
+    const request: Option['camera'] = (cameraType === 'Perspective')? 'Orthographic': 'Perspective';
+    workPlayer?.changeCamera(request);
+    setCameraType(request);
   }
 
   return (
@@ -76,6 +83,11 @@ export const PlaybackScreen : React.FC<Props> = ({ work, isValidAutoPlay }) => {
         <Grid item> <button onClick = { play }> PLAY </button> </Grid>
         <Grid item> <button onClick = { stop }> STOP </button> </Grid>
         <Recorder canvas = { canvasRef }/>
+      </Grid>
+
+      <Grid container>
+        <Grid item> <button onClick = { switchCamera }> SWITCH CAMERA TYPE </button> </Grid>
+        <Grid item> { cameraType } </Grid>
       </Grid>
 
     </Grid>

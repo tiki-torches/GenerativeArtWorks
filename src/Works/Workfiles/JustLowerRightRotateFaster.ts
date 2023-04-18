@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Option } from '../../Engine/WorkPlayer';
 import GenerativeWork from "../Management/GenerativeWork";
 
 /**
@@ -7,15 +8,16 @@ import GenerativeWork from "../Management/GenerativeWork";
 export class JustLowerRightRotateFaster extends GenerativeWork{
 
   static workID : string = 'JustLowerRightRotateFaster';
+  cameraType    : Option['camera'] = 'Orthographic';
 
-  meshes: Array<THREE.Mesh>;
+  tdobjs: Array<THREE.Mesh>;
   meshMatrix: Array<Array<THREE.Mesh>>;
 
   constructor(){
 
     super();
 
-    this.meshes     = [];
+    this.tdobjs     = [];
     this.meshMatrix = [];
 
     const NUMBER_OF_ROWS: number  = 30;
@@ -30,12 +32,12 @@ export class JustLowerRightRotateFaster extends GenerativeWork{
       return mesh
     }
 
-    // create meshes
+    // create tdobjs
     for(let i = 0; i < NUMBER_OF_ROWS - 1; i++){
       this.meshMatrix[i] = [];
       for(let j = 0; j < NUMBER_OF_LINES -1; j++){
         const mesh = createMesh();
-        this.meshes.push(mesh);
+        this.tdobjs.push(mesh);
         this.meshMatrix[i][j] = mesh;
       }
     }
@@ -57,9 +59,10 @@ export class JustLowerRightRotateFaster extends GenerativeWork{
   }
 
   main(){
+    const WEGHIT = 0.001;
     this.meshMatrix.forEach( (row, i) => {
       row.forEach( (mesh, j) => {
-        mesh.rotation.y +=  (i * 0.001) + (j * 0.001);
+        mesh.rotation.y +=  (i * WEGHIT) + (j * WEGHIT);
       })
     })
   };

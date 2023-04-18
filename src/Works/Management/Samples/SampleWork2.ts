@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import GenerativeWork from "../../Management/GenerativeWork";
+import { Option } from '../../../Engine/WorkPlayer';
+import GenerativeWork, { OptionMethodMain } from "../GenerativeWork";
 
 /**
  * サンプル
@@ -8,8 +9,9 @@ import GenerativeWork from "../../Management/GenerativeWork";
 export class SampleWork2 extends GenerativeWork{
 
   static workID : string = 'sample2';
+  cameraType    : Option['camera'] = 'Orthographic';
 
-  meshes: Array<THREE.Mesh>;
+  tdobjs: Array<THREE.Mesh>;
 
   constructor(){
 
@@ -17,22 +19,24 @@ export class SampleWork2 extends GenerativeWork{
 
     // 新しい3Dモデルを生成
     const generated = this.generateMesh();
-    this.meshes = [ generated ];
+    this.tdobjs = [ generated ];
     
   }
 
-  main(scene: THREE.Scene){
+  main(option: OptionMethodMain){
 
     // アニメーション
-    this.meshes.forEach( (mesh) => {
+    this.tdobjs.forEach( (mesh) => {
       mesh.rotation.y += 0.01;
       mesh.position.x += 1;
     })
 
     // 新しい3Dモデルを生成
     const generated = this.generateMesh();
-    this.meshes.push(generated);
-    this.updateScene(scene, [ generated ]);
+    this.tdobjs.push(generated);
+    if(option.scene){
+      this.updateScene(option.scene, [ generated ]);
+    }
   };
 
   generateMesh(): THREE.Mesh{

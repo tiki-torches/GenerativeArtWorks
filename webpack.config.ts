@@ -24,8 +24,12 @@ const config: Configuration = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: 'ts-loader',
+                use: 'ts-loader'
             },
+            {
+                test: /\.mp3$/,
+                loader: 'file-loader'
+            }
         ],
     },
     mode: "development",

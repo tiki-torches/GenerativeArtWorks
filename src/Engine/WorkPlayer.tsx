@@ -1,18 +1,15 @@
 import WorkInterface from 'src/Works/Management/GenerativeWork';
 import * as THREE from 'three';
 
-/**
- * 基本的なTDModel
- * 各種レンダリングライブラリ向けに変換する素として使用する
- */
+export type Option = { camera: 'Perspective' | 'Orthographic' };
 class WorkPlayer{
 
   // 作品を描画するエリアとなるHTMLcanvas要素
   canvas    : HTMLCanvasElement;
 
   // 作品の再生状況の管理用プロパティ
-  reqAnmID      : number;     // アニメーションの実行回数（実行フレーム数）を保持するプロパティ
-  isPlaying     : Boolean;
+  reqAnmID  : number;     // アニメーションの実行回数（実行フレーム数）を保持するプロパティ
+  isPlaying : Boolean;
 
   // THREE用
   width   = 1920;
@@ -21,12 +18,15 @@ class WorkPlayer{
   scene     : THREE.Scene;
   camera    : THREE.PerspectiveCamera | THREE.OrthographicCamera;
 
-  constructor(canvas: HTMLCanvasElement){
+  option?   : Option;
 
-    this.canvas       = canvas;
-    this.reqAnmID     = 0;
-    this.isPlaying    = false;
+  constructor(canvas: HTMLCanvasElement, option?: Option){
 
+    this.canvas     = canvas;
+    this.reqAnmID   = 0;
+    this.isPlaying  = false;
+
+    // antialias: ジャギィを無くすオプション
     const renderer: any = new THREE.WebGLRenderer({
       canvas: canvas, antialias: true
     });
@@ -34,10 +34,7 @@ class WorkPlayer{
     renderer.setSize(this.width, this.height);
     this.renderer = renderer;
 
-    // const camera = new THREE.PerspectiveCamera(45, this.width / this.height);
-    // new THREE.OrthographicCamera(left, right, top, bottom, near, far)
-    const camera = new THREE.OrthographicCamera(-960, +960, 540, -540, 1, 1000);
-    camera.position.set(0, 0, +1000);
+    const camera: THREE.PerspectiveCamera | THREE.OrthographicCamera = this.makeCamera(option?.camera);
     this.camera = camera;
 
     const scene = new THREE.Scene();
@@ -57,12 +54,13 @@ class WorkPlayer{
     }else{
 
       // Sceneを初期化
-      this.initializeScene(this.scene, work.meshes);
+      this.initializeScene(this.scene, work.tdobjs);
   
       const animate = () => {
 
         // 作品を再生
-        work.main(this.scene);
+        const option = { scene: this.scene, camera: this.camera, animID: this.reqAnmID}
+        work.main(option);
   
         // レンダリングを実行
         this.renderer.render(this.scene, this.camera);
@@ -90,7 +88,7 @@ class WorkPlayer{
   }
 
   reset(work: WorkInterface): void{
-    this.initializeScene(this.scene, work.meshes);
+    this.initializeScene(this.scene, work.tdobjs);
     this.reqAnmID = 0;
     this.isPlaying = false;
   }
@@ -100,7 +98,7 @@ class WorkPlayer{
    * @param scene 
    * @param tdModels 
    */
-  initializeScene(scene: THREE.Scene, meshList: Array<THREE.Mesh>): void{
+  initializeScene(scene: THREE.Scene, meshList: Array<THREE.Mesh | THREE.Line>): void{
 
     // Sceneに登録済みの3Dオブジェクトを全て削除
     scene.children.forEach( (tdObject) => { scene.remove(tdObject) });
@@ -109,6 +107,27 @@ class WorkPlayer{
     meshList.forEach( (mesh) => { scene.add(mesh) });
   }
 
+  makeCamera(cameraType: Option['camera'] | undefined){
+    let camera: THREE.PerspectiveCamera | THREE.OrthographicCamera;
+    switch(cameraType){
+      case 'Perspective':
+        camera = new THREE.PerspectiveCamera(45, this.width / this.height);
+        break;
+      case 'Orthographic':
+        camera = new THREE.OrthographicCamera(-960, +960, 540, -540, 1, 1000);
+        break;
+      default:
+        camera = new THREE.PerspectiveCamera(45, this.width / this.height);
+    }
+    camera.position.set(0, 0, +1000);
+    return camera
+  }
+
+  changeCamera(cameraType: Option['camera'] | undefined){
+    const camera = this.makeCamera(cameraType);
+    camera.position.set(0, 0, +1000);
+    this.camera = camera;
+  }
 
 }
 
