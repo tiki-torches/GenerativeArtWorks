@@ -153,23 +153,38 @@ class ChickenHand{
   cryVoice: any;                        // 鳴き声ファイルのパス
   cryWeight: number;                    // 鳴く頻度を調整する重み
   radius: number;                       // 軌道
-
+  doExpand: boolean;
+  
   constructor(tdobj: THREE.Mesh, cryCoordinates: Array<Coordinate>, cryVoice: any, cryWeight: number, radius: number){
     this.tdobj = tdobj;
     this.cryCoordinates = cryCoordinates;
     this.cryVoice = cryVoice;
     this.cryWeight = cryWeight;
     this.radius = radius;
+    this.doExpand = true;
   }
 
   cry(){
     this.cryCoordinates.forEach((coord) => {
-      if( ( Math.abs(this.tdobj.position.x - coord.x * this.radius) < 1) &&  (Math.abs(this.tdobj.position.y - coord.y * this.radius) < 1) ){
+      if( (Math.abs(this.tdobj.position.x - coord.x * this.radius) < 1)
+      && (Math.abs(this.tdobj.position.y - coord.y * this.radius) < 1) ){
+        
         const sound = new Audio(this.cryVoice);
         sound.play();
-        this.tdobj.scale.x = this.tdobj.scale.x * 1.1;
-        this.tdobj.scale.y = this.tdobj.scale.y * 1.1;
-      }else{
+
+        if(this.doExpand){
+          this.tdobj.scale.x = this.tdobj.scale.x * 1.1;
+          this.tdobj.scale.y = this.tdobj.scale.y * 1.1;
+        }else{
+          this.tdobj.scale.x = this.tdobj.scale.x * 0.9;
+          this.tdobj.scale.y = this.tdobj.scale.y * 0.9;
+        }
+        
+        if(this.tdobj.scale.x > 5){
+          this.doExpand = false;
+        }else if(this.tdobj.scale.x < 100){
+          this.doExpand = true;
+        }
       }
     })
   }
